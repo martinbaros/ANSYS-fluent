@@ -4,7 +4,8 @@
 #define LREF 12.8 // characteristic length, b
 #define CMU 0.09 // 
 
-DEFINE_PROFILE(velocity_profile, thread, position)
+/* reference velocity profile*/
+DEFINE_PROFILE(reference_velocity_profile, thread, position)
 {
 	float x[ND_ND];
 	float y;
@@ -15,18 +16,56 @@ DEFINE_PROFILE(velocity_profile, thread, position)
 	{
 		F_CENTROID(x,f,thread);
 		y=x[1];
-		//u = UREF*pow(y/ZREF,0.27);
-		//if (y < 10)  u = UREF;
-		//else u = ((0.19*pow(1/0.05, 0.07))*(log(y)*1))*UREF;
+
+		u = UREF*pow(y/ZREF,0.27);
+
+		F_PROFILE(f,thread,position) = u;
+	}
+	end_f_loop(f, thread)
+}
+
+/* velocity profile from 0 */
+DEFINE_PROFILE(velocity_profile_starting0m, thread, position)
+{
+	float x[ND_ND];
+	float y;
+	float u;
+	face_t f;
+
+	begin_f_loop(f, thread)
+	{
+		F_CENTROID(x,f,thread);
+		y=x[1];
+
 		u = ((0.19*pow(1/0.05, 0.07))*(log(y)*1))*UREF;
+
+		F_PROFILE(f,thread,position) = u;
+	}
+	end_f_loop(f, thread)
+}
+
+/* velocity profile from 10, else basic 2.5 */
+DEFINE_PROFILE(velocity_profile_starting10m, thread, position)
+{
+	float x[ND_ND];
+	float y;
+	float u;
+	face_t f;
+
+	begin_f_loop(f, thread)
+	{
+		F_CENTROID(x,f,thread);
+		y=x[1];
+
+		if (y < 10)  u = UREF;
+		else u = ((0.19*pow(1/0.05, 0.07))*(log(y)*1))*UREF;
+
 		F_PROFILE(f,thread,position) = u;
 	}
 	end_f_loop(f, thread)
 }
 
 /*  profile for kinetic energy, k  */
-
-
 DEFINE_PROFILE(k_profile, thread, position)
 {
 	float x[ND_ND];
@@ -38,20 +77,19 @@ DEFINE_PROFILE(k_profile, thread, position)
 	float A4 = 0.3671 ;
 	float k, y, yb;
   	begin_f_loop(f, thread)
-    	{
-      		F_CENTROID(x,f,thread);
+    {
+      	F_CENTROID(x,f,thread);
 		y = x[1];
-      		yb = y/LREF;
-		k = A1*pow(yb,3)+A2*pow(yb,2)+A3*yb+A4 ;
-      		F_PROFILE(f,thread,position)=k;
       		
-    	}
+		yb = y/LREF;
+		k = A1*pow(yb,3)+A2*pow(yb,2)+A3*yb+A4 ;
+      		
+		F_PROFILE(f,thread,position)=k;
+    }
   	end_f_loop(f, thread)
 }
 
 /* profile for dissipation rate, epsilon */
-
-
 DEFINE_PROFILE(dissip_profile, thread, position)
 {
   	float x[ND_ND];
@@ -62,12 +100,14 @@ DEFINE_PROFILE(dissip_profile, thread, position)
 	float A4 = 0.3671 ;
 	float k, y, yb;
   	begin_f_loop(f, thread)
-    	{
-      		F_CENTROID(x,f,thread);
+    {
+      	F_CENTROID(x,f,thread);
 		y=x[1];
+
 		yb = y/LREF;
 		k = A1*pow(yb,3)+A2*pow(yb,2)+A3*yb+A4 ;
-      		F_PROFILE(f,thread,position)=pow(CMU,0.75)*pow(k,1.5)/LREF;
-    	}
+      	
+		F_PROFILE(f,thread,position)=pow(CMU,0.75)*pow(k,1.5)/LREF;
+    }
   	end_f_loop(f,thread)
 }
