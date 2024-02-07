@@ -122,3 +122,31 @@ DEFINE_PROFILE(dissip_profile, thread, position)
     }
   	end_f_loop(f,thread)
 }
+
+
+
+/* reference velocity profile*/
+DEFINE_PROFILE(detail_velocity_profile, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -1.88978572e+06;
+	float A2 = 7.78781546e+04;
+	float A3 = -1.10368954e+03;
+	float A4 = 5.88531699e+00;
+	float A5 = 8.17468387e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[0];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v
+    }
+  	end_f_loop(f,thread)
+}
