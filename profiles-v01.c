@@ -31,13 +31,19 @@ DEFINE_PROFILE(velocity_profile_starting0m, thread, position)
 	float y;
 	float u;
 	face_t f;
+	float k_r, c_r, z;
+
 
 	begin_f_loop(f, thread)
 	{
 		F_CENTROID(x,f,thread);
 		y=x[1];
 
-		u = ((0.19*pow(1/0.05, 0.07))*(log(y)*1))*UREF;
+		z = y;
+		k_r = 0.19*pow((1/0.05), 0.07);
+		c_r = k_r * log(z);
+		u = c_r * 1 * UREF;
+
 
 		F_PROFILE(f,thread,position) = u;
 	}
@@ -51,14 +57,19 @@ DEFINE_PROFILE(velocity_profile_starting10m, thread, position)
 	float y;
 	float u;
 	face_t f;
+	float k_r, c_r, z;
 
 	begin_f_loop(f, thread)
 	{
 		F_CENTROID(x,f,thread);
 		y=x[1];
 
-		if (y < 10)  u = UREF;
-		else u = ((0.19*pow(1/0.05, 0.07))*(log(y)*1))*UREF;
+		if (y < 10)  z = 10;
+		else z = y;
+
+		k_r = 0.19*pow((1/0.05), 0.07);
+		c_r = k_r * log(z);
+		u = c_r * 1 * UREF;
 
 		F_PROFILE(f,thread,position) = u;
 	}
