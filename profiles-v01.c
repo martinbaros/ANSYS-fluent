@@ -142,11 +142,11 @@ DEFINE_PROFILE(detail_velocity_profile, thread, position)
   	begin_f_loop(f, thread)
     {
       	F_CENTROID(x,f,thread);
-		yb=x[0];
+		yb=x[1];
 
 		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
       	
-		F_PROFILE(f,thread,position)=v
+		F_PROFILE(f,thread,position)=v;
     }
   	end_f_loop(f,thread)
 }
