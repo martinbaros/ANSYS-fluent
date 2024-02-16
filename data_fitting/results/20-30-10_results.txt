@@ -1,0 +1,6 @@
+Best fitting function: Quartic with R-squared = 0.8016227684799853
+Best parameters: [-2.27543821e+06 
+ 9.37959016e+04 
+ -1.32852717e+03  
+ 7.11614515e+00
+  7.94125808e-03]

@@ -116,7 +116,7 @@ DEFINE_PROFILE(dissip_profile, thread, position)
 		y=x[1];
 
 		yb = y/LREF;
-		k = A1*pow(yb,3)+A2*pow(yb,2)+A3*yb+A4 ;
+		k = A1*pow(yb,3)+A2*pow(yb,2)+A3*yb+A4;
       	
 		F_PROFILE(f,thread,position)=pow(CMU,0.75)*pow(k,1.5)/LREF;
     }
@@ -126,7 +126,7 @@ DEFINE_PROFILE(dissip_profile, thread, position)
 
 
 /* reference velocity profile*/
-DEFINE_PROFILE(detail_velocity_profile, thread, position)
+DEFINE_PROFILE(velocity_profile_20_20_10, thread, position)
 {
 	float x[ND_ND];
   	face_t f;
@@ -137,6 +137,107 @@ DEFINE_PROFILE(detail_velocity_profile, thread, position)
 	float A3 = -1.10368954e+03;
 	float A4 = 5.88531699e+00;
 	float A5 = 8.17468387e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+DEFINE_PROFILE(velocity_profile_20_30_10, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -2.27543821e+06;
+	float A2 = 9.37959016e+04;
+	float A3 = -1.32852717e+03;
+	float A4 = 7.11614515e+00;
+	float A5 = 7.94125808e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+DEFINE_PROFILE(velocity_profile_20_20_5, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -1.29185557e+06;
+	float A2 =  5.27723273e+04;
+	float A3 = -7.41635489e+02;
+	float A4 = 3.94656863e+00;
+	float A5 = 4.08825029e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+
+DEFINE_PROFILE(velocity_profile_10_20_5, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -4.03739162e+07;
+	float A2 =  8.13973048e+05;
+	float A3 = -5.62668521e+03;
+	float A4 = 1.48226397e+01;
+	float A5 = 5.87035882e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+DEFINE_PROFILE(velocity_profile_10_20_10, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -6.32304507e+07;
+	float A2 =  1.30489771e+06;
+	float A3 = -9.40240278e+03;
+	float A4 = 2.66092275e+01;
+	float A5 = 1.60603934e-03;
 
 	float v, yb;
   	begin_f_loop(f, thread)

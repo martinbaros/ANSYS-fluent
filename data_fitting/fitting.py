@@ -5,12 +5,16 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import r2_score
 from scipy.interpolate import UnivariateSpline
 
-# Load the data from CSV
-df = pd.read_csv('data_fitting/data.csv')  # Make sure to replace 'path_to_your_file.csv' with your actual file path
+used_dataset = '15-20-10'
 
+velocity = pd.read_csv('data_fitting/data/' + used_dataset + '/velocity.csv', header=None, names=["0"]) 
+geometry = pd.read_csv('data_fitting/data/' + used_dataset + '/geometry.csv', header=None, names=["0"])  # Make sure to replace 'path_to_your_file.csv' with your actual file path
 # Extract the Z column as x-data and Velocity as y-data
-x = df[' Y [ m ]'].values
-y = df[' Velocity [ m s^-1 ]'].values
+
+
+x = geometry["0"].values
+y = velocity["0"].values
+
 
 
 def four_parameter_logistic(x, A, B, C, D):
@@ -110,6 +114,11 @@ if spline_r2 > best_r2:
 
 print(f"Best fitting function: {best_func_name} with R-squared = {best_r2}")
 print(f"Best parameters: {best_params}")
+
+with open('data_fitting/results/' + used_dataset + '_results.txt', 'w') as file:
+    file.write(f"Best fitting function: {best_func_name} with R-squared = {best_r2}" + '\n')
+    file.write(f"Best parameters: {best_params}" + '\n')
+
 # Plot the best fitting function along with the data
 plt.plot(x, y, 'o', color ='red', label ="data")
 plt.plot(x, best_fit, '--', color ='blue', label =f"Best fit: {best_func_name}")
