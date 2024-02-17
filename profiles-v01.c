@@ -251,3 +251,107 @@ DEFINE_PROFILE(velocity_profile_10_20_10, thread, position)
     }
   	end_f_loop(f,thread)
 }
+
+
+
+DEFINE_PROFILE(velocity_profile_20_40_10, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -3.21686814e+06;
+	float A2 =  1.25153207e+05;
+	float A3 = -1.56319553e+03;
+	float A4 = 7.50479822e+00;
+	float A5 = 4.52561674e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+
+DEFINE_PROFILE(velocity_profile_20_10_10, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -1.44412233e+06;
+	float A2 =  5.95366563e+04;
+	float A3 = -8.46129173e+02;
+	float A4 = 4.54995959e+00;
+	float A5 = 5.16207544e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+DEFINE_PROFILE(velocity_profile_15_20_10, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -8.60572355e+06;
+	float A2 = 2.62919269e+05;
+	float A3 = -2.75194252e+03;
+	float A4 = 1.08970573e+01;
+	float A5 = 8.86748152e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}
+
+
+DEFINE_PROFILE(velocity_profile_15_20_5, thread, position)
+{
+	float x[ND_ND];
+  	face_t f;
+
+	//Quartic fitted data see data_fitting/fitting.py
+	float A1 = -6.14028922e+06;
+	float A2 = 1.87045464e+05;
+	float A3 = -1.96236492e+03;
+	float A4 = 7.90400904e+00;
+	float A5 = 3.34872950e-03;
+
+	float v, yb;
+  	begin_f_loop(f, thread)
+    {
+      	F_CENTROID(x,f,thread);
+		yb=x[1];
+
+		v = A1*pow(yb,4) + A2*pow(yb,3) + A3*pow(yb,2) + A4*yb + A5;
+      	
+		F_PROFILE(f,thread,position)=v;
+    }
+  	end_f_loop(f,thread)
+}

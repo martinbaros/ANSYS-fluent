@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import r2_score
 from scipy.interpolate import UnivariateSpline
 
-used_dataset = '15-20-10'
+used_dataset = '15-20-5'
 
 velocity = pd.read_csv('data_fitting/data/' + used_dataset + '/velocity.csv', header=None, names=["0"]) 
 geometry = pd.read_csv('data_fitting/data/' + used_dataset + '/geometry.csv', header=None, names=["0"])  # Make sure to replace 'path_to_your_file.csv' with your actual file path
